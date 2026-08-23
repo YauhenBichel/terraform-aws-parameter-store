@@ -1,4 +1,4 @@
-# Terraform AWS AWS SSM Parameter Store
+# Terraform AWS SSM Parameter Store
 
 [![Terraform Registry](https://img.shields.io/badge/Terraform-Registry-7B42BC?logo=terraform&logoColor=white)](https://registry.terraform.io/modules/YauhenBichel/parameter-store/aws/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
