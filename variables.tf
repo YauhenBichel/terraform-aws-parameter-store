@@ -28,7 +28,7 @@ variable "aws_region" {
 
 variable "project_name" {
   default     = "aws-ssm-parameter-store-tf-module"
-  description = "GitHub repository name"
+  description = "Written to the Project tag on every parameter"
   type = string
   nullable = false
 }
