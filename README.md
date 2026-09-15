@@ -10,14 +10,14 @@ Creates a set of AWS Systems Manager Parameter Store parameters from a single ma
 ```hcl
 module "parameter_store" {
   source  = "YauhenBichel/parameter-store/aws"
-  version = "1.0.0"
+  version = "1.1.0"
 
   env                  = "prod"
   service_domain       = "payments"
   team                 = "infra-team"
   aws_region           = "eu-west-2"
 
-  parameter_store_path = "/payments/prod"
+  parameter_store_path = "/payments/prod/"
 
   parameters = {
     db_host = {
@@ -62,7 +62,7 @@ provider "aws" {
 | Name | Version |
 |---|---|
 | terraform | >= 1.0 |
-| aws provider | >= 4.0 |
+| aws provider | ~> 6.0 |
 
 ## Inputs
 
@@ -73,10 +73,17 @@ provider "aws" {
 | `team` | `string` | `infra-team` | Owning team |
 | `aws_region` | `string` | `eu-west-2` | Target region |
 | `project_name` | `string` | `aws-ssm-parameter-store-tf-module` | Project name, used in tags |
-| `parameter_store_path` | `string` | — | Path prefix for all parameters |
-| `parameters` | `map(object)` | — | Map of parameters to create — each with `type`, optional `description`, and `value` |
+| `parameter_store_path` | `string` | — | Prefix joined to each map key with no separator, so include the trailing `/` |
+| `parameters` | `map(object)` | — | Map of parameters to create. Each takes `value` and `type`, plus optional `description` and `tier` (`Standard` by default) |
 
 A dash in the Default column means the input is required.
+
+The parameter name is `parameter_store_path` followed immediately by the map key,
+with nothing inserted between them. `/payments/prod/` with a key of `db_host`
+gives `/payments/prod/db_host`; leaving the slash off gives `/payments/proddb_host`.
+
+Parameters are written with `overwrite = true`, so applying this module takes
+ownership of a parameter that already exists at that name.
 
 ## Outputs
 
@@ -94,14 +101,6 @@ sending a large change.
 [MIT](LICENSE) — Yauhen Bichel
 
 ---
-
-## Contributors
-
-Thank you to everyone who has helped this project. Your code, reviews, issues, and pull requests are appreciated.
-
-- [@YauhenBichel](https://github.com/YauhenBichel)
-
-See the [full contributor graph](https://github.com/YauhenBichel/terraform-aws-parameter-store/graphs/contributors).
 
 ## Contributors
 
